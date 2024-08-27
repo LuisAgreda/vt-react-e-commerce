@@ -31,6 +31,7 @@ const Navbar = () => (
           Shopi
         </NavLink>
       </li>
+
       {
         navListLeft.map(({ to, name }) => (
           <li key={ name }>
@@ -43,10 +44,12 @@ const Navbar = () => (
         ))
       }
     </ul>
+
     <ul className="flex items-center gap-3">
       <li className="text-black/60">
         agreda.feli@gmail.com
       </li>
+
       {
         navListRight.map(({ to, name }) => (
           <li key={ name }>
@@ -58,6 +61,7 @@ const Navbar = () => (
           </li>
         ))
       }
+
       <li>
         🛒 0
       </li>
