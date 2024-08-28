@@ -1,4 +1,4 @@
-import { useFetchData } from '../../hooks/useFetchData'
+import { useFetchData } from '../../Hooks/useFetchData'
 
 import { Layout } from '../../Components/Layout'
 import { Card } from '../../Components/Card'

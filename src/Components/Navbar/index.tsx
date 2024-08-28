@@ -18,7 +18,9 @@ const navListRight = [
 const linkStyles = ({ isActive }: Record<string, boolean>) => {
   const activeStyle = 'underline underline-offset-4'
 
-  if (isActive) return activeStyle
+  return isActive
+  ? activeStyle
+  : 'hover:underline underline-offset-4'
 }
 
 const Navbar = () => (
