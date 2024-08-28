@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { ProductsResponse } from '../Pages/Home/types'
+import type { ProductsResponse } from '../types'
 
 
 const useFetchData = () => {
   const PRODUCTS_API = import.meta.env.VITE_PRODUCTS_API
 
-  const [items, setItems] = useState<ProductsResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [items, setItems] = useState<ProductsResponse[] | null>(null)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,12 +15,11 @@ const useFetchData = () => {
 
         if (!response.ok) throw new Error(`Error: ${response.status}`)
 
-        const data: ProductsResponse = await response.json()
+        const data: ProductsResponse[] = await response.json()
 
         setItems(data)
       } catch (error) {
-        setError((error as Error).message)
-        console.log(error);
+        setError(error as Error)
       }
     }
 
