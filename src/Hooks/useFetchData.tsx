@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { ProductsResponse } from '../types'
 
-
 const useFetchData = () => {
   const PRODUCTS_API = import.meta.env.VITE_PRODUCTS_API
 

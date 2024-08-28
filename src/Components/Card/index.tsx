@@ -1,6 +1,11 @@
+import { useContext } from 'react'
+import { ShoppingContext } from '../../Context'
+
 import type { Data } from "./types"
 
 const Card = ({ data }: Data) => {
+  const { increaseCount } = useContext(ShoppingContext)
+
   const {
     id,
     title,
@@ -20,9 +25,12 @@ const Card = ({ data }: Data) => {
           { categoryName }
         </span>
 
-        <div className="w-6 h-6 p-1 m-2 bg-white rounded-full border grid place-content-center absolute top-0 right-0">
+        <button
+          type="button"
+          className="w-6 h-6 p-1 m-2 bg-white rounded-full border grid place-content-center absolute top-0 right-0"
+          onClick={ increaseCount }>
           +
-        </div>
+        </button>
       </figure>
 
       <p className="flex justify-between items-center">

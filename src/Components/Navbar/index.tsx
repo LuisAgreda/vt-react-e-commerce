@@ -1,4 +1,7 @@
+import { useContext } from "react"
 import { NavLink } from "react-router-dom"
+
+import { ShoppingContext } from "../../Context"
 
 const navListLeft = [
   { to: '/', name: 'All' },
@@ -23,52 +26,56 @@ const linkStyles = ({ isActive }: Record<string, boolean>) => {
   : 'hover:underline underline-offset-4'
 }
 
-const Navbar = () => (
-  <nav className="px-8 py-4 bg-white/85 backdrop-blur flex justify-between items-center sticky top-0 z-10">
-    <ul className="flex items-center gap-3">
-      <li>
-        <NavLink
-          to="/"
-          className="font-semibold text-lg">
-          RK Shop
-        </NavLink>
-      </li>
+const Navbar = () => {
+  const { count } = useContext(ShoppingContext)
 
-      {
-        navListLeft.map(({ to, name }) => (
-          <li key={ name }>
-            <NavLink
-              to={to}
-              className={linkStyles}>
-              { name }
-            </NavLink>
-          </li>
-        ))
-      }
-    </ul>
+  return (
+    <nav className="px-8 py-4 bg-white/85 backdrop-blur flex justify-between items-center sticky top-0 z-10">
+      <ul className="flex items-center gap-3">
+        <li>
+          <NavLink
+            to="/"
+            className="font-semibold text-lg">
+            RK Shop
+          </NavLink>
+        </li>
 
-    <ul className="flex items-center gap-3">
-      <li className="text-black/60">
-        agreda.feli@gmail.com
-      </li>
+        {
+          navListLeft.map(({ to, name }) => (
+            <li key={ name }>
+              <NavLink
+                to={to}
+                className={ linkStyles }>
+                { name }
+              </NavLink>
+            </li>
+          ))
+        }
+      </ul>
 
-      {
-        navListRight.map(({ to, name }) => (
-          <li key={ name }>
-            <NavLink
-              to={ to }
-              className={linkStyles}>
-              { name }
-            </NavLink>
-          </li>
-        ))
-      }
+      <ul className="flex items-center gap-3">
+        <li className="text-black/60">
+          agreda.feli@gmail.com
+        </li>
 
-      <li>
-        🛒 0
-      </li>
-    </ul>
-  </nav>
-)
+        {
+          navListRight.map(({ to, name }) => (
+            <li key={ name }>
+              <NavLink
+                to={ to }
+                className={ linkStyles }>
+                { name }
+              </NavLink>
+            </li>
+          ))
+        }
+
+        <li>
+          🛒 { count }
+        </li>
+      </ul>
+    </nav>
+  )
+}
 
 export { Navbar }
