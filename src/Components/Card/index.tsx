@@ -33,7 +33,7 @@ const Card = ({ data }: Data) => {
         </button>
       </figure>
 
-      <p className="flex justify-between items-center">
+      <p className="flex justify-between items-center gap-2">
         <span className="text-sm">
           { title }
         </span>
