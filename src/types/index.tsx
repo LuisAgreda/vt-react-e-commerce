@@ -9,6 +9,6 @@ export interface ProductsResponse {
   title: string,
   price: number,
   description: string,
-  categoty: Category,
+  category: Category,
   images: string[]
 }

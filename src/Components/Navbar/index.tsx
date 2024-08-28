@@ -22,13 +22,13 @@ const linkStyles = ({ isActive }: Record<string, boolean>) => {
 }
 
 const Navbar = () => (
-  <nav className="px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+  <nav className="px-8 py-4 bg-white/85 backdrop-blur flex justify-between items-center sticky top-0 z-10">
     <ul className="flex items-center gap-3">
       <li>
         <NavLink
           to="/"
           className="font-semibold text-lg">
-          Shopi
+          RK Shop
         </NavLink>
       </li>
 
