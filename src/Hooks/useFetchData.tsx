@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import type { ProductsResponse } from '../types'
 
+const PRODUCTS_API = import.meta.env.VITE_PRODUCTS_API
+
 const useFetchData = () => {
-  const PRODUCTS_API = import.meta.env.VITE_PRODUCTS_API
+  const getProductsUrl = `${PRODUCTS_API}/products`
 
   const [items, setItems] = useState<ProductsResponse[] | null>(null)
   const [error, setError] = useState<Error | null>(null)
@@ -10,7 +12,7 @@ const useFetchData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(PRODUCTS_API)
+        const response = await fetch(getProductsUrl)
 
         if (!response.ok) throw new Error(`Error: ${response.status}`)
 
@@ -23,7 +25,7 @@ const useFetchData = () => {
     }
 
     fetchData()
-  }, [PRODUCTS_API])
+  }, [getProductsUrl])
 
   return {
     items,
