@@ -23,8 +23,9 @@ export interface CardContextType {
   count: number
   isProductDetailOpen: boolean
   currentProductDetail: ProductsResponse | unknown
+  cartProducts: ProductsResponse[]
   setCount: (number: number) => void
-  increaseCount: (event: MouseEvent) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
   closeProductDetail: () => void
+  addProducts: (event: MouseEvent, product: ProductsResponse) => void
 }

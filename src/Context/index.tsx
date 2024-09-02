@@ -5,11 +5,12 @@ import type { ChildrenType, CardContextType, ProductsResponse } from '../types'
 const defaulContext = {
   count: 0,
   isProductDetailOpen: false,
+  cartProducts: [],
   setCount: () => {},
-  increaseCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
-  currentProductDetail: {}
+  currentProductDetail: {},
+  addProducts: () => {}
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
@@ -18,11 +19,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [currentProductDetail, setCurrentProductDetail] = useState({})
-
-  const increaseCount = useCallback((event: MouseEvent) => {
-    event.stopPropagation()
-    setCount(count + 1)
-  }, [count])
+  const [cartProducts, setCartProducts] = useState<ProductsResponse[]>([])
 
   const openProductDetail = (currentProduct: ProductsResponse) => {
     setIsProductDetailOpen(true)
@@ -31,15 +28,26 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
   const closeProductDetail = () => setIsProductDetailOpen(false)
 
+  const addProducts = useCallback((event: MouseEvent, product: ProductsResponse) => {
+    event.stopPropagation()
+
+    const newProducts = [...cartProducts]
+    newProducts.push(product)
+
+    setCartProducts(newProducts)
+    setCount(cartProducts.length + 1)
+  }, [cartProducts])
+
   const contextValue = useMemo(() => ({
     count,
     setCount,
-    increaseCount,
     isProductDetailOpen,
     openProductDetail,
     closeProductDetail,
     currentProductDetail,
-  }), [count, setCount, increaseCount, isProductDetailOpen, currentProductDetail])
+    cartProducts,
+    addProducts
+  }), [count, setCount, isProductDetailOpen, currentProductDetail, cartProducts, addProducts])
 
   return (
     <ShoppingContext.Provider value={ contextValue }>

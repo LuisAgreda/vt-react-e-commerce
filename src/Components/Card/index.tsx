@@ -6,7 +6,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import type { Data } from "./types"
 
 const Card = ({ data }: Data) => {
-  const { increaseCount, openProductDetail } = useContext(ShoppingContext)
+  const { openProductDetail, addProducts } = useContext(ShoppingContext)
 
   const {
     id,
@@ -32,7 +32,7 @@ const Card = ({ data }: Data) => {
         <button
           type="button"
           className="w-6 h-6 p-1 m-2 bg-white rounded-full border grid place-content-center absolute top-0 right-0"
-          onClick={ increaseCount }>
+          onClick={ (event) => addProducts(event, data) }>
           <PlusIcon className="w-4 h-4 text-black" />
         </button>
       </figure>
