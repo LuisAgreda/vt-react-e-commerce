@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, type MouseEvent } from 'react'
 
 interface Category {
   id: number
@@ -21,6 +21,10 @@ export interface ChildrenType {
 
 export interface CardContextType {
   count: number
+  isProductDetailOpen: boolean
+  currentProductDetail: ProductsResponse | unknown
   setCount: (number: number) => void
-  increaseCount: () => void
+  increaseCount: (event: MouseEvent) => void
+  openProductDetail: (currentProduct: ProductsResponse) => void
+  closeProductDetail: () => void
 }
