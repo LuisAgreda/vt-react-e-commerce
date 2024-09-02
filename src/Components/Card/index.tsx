@@ -1,10 +1,12 @@
 import { useContext } from 'react'
 import { ShoppingContext } from '../../Context'
 
+import { PlusIcon } from '@heroicons/react/24/solid'
+
 import type { Data } from "./types"
 
 const Card = ({ data }: Data) => {
-  const { increaseCount } = useContext(ShoppingContext)
+  const { increaseCount, openProductDetail } = useContext(ShoppingContext)
 
   const {
     id,
@@ -14,10 +16,12 @@ const Card = ({ data }: Data) => {
   } = data
 
   return (
-    <div className="w-56 h-60 bg-white rounded-lg cursor-pointer">
+    <div
+      className="w-56 h-60 bg-white rounded-lg cursor-pointer"
+      onClick={ () => openProductDetail(data) }>
       <figure className="w-full h-4/5 mb-2 relative">
         <img
-          src={`https://picsum.photos/id/${id}/800`}
+          src={ `https://picsum.photos/id/${id}/800` }
           alt={ categoryName }
           className="w-full h-full object-cover rounded-lg" />
 
@@ -29,7 +33,7 @@ const Card = ({ data }: Data) => {
           type="button"
           className="w-6 h-6 p-1 m-2 bg-white rounded-full border grid place-content-center absolute top-0 right-0"
           onClick={ increaseCount }>
-          +
+          <PlusIcon className="w-4 h-4 text-black" />
         </button>
       </figure>
 
