@@ -5,21 +5,26 @@ import type { ChildrenType, CardContextType, ProductsResponse } from '../types'
 const defaulContext = {
   count: 0,
   isProductDetailOpen: false,
+  isCheckoutSideMenuOpen: false,
   cartProducts: [],
   setCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
   currentProductDetail: {},
-  addProducts: () => {}
+  addProducts: () => {},
+  setIsCheckoutSideMenuOpen: () => {},
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
 
 const ShoppingProvider = ({ children }: ChildrenType) => {
   const [count, setCount] = useState(0)
+
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [currentProductDetail, setCurrentProductDetail] = useState({})
   const [cartProducts, setCartProducts] = useState<ProductsResponse[]>([])
+
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 
   const openProductDetail = (currentProduct: ProductsResponse) => {
     setIsProductDetailOpen(true)
@@ -35,6 +40,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     newProducts.push(product)
 
     setCartProducts(newProducts)
+    setIsCheckoutSideMenuOpen(true)
+    setIsProductDetailOpen(false)
     setCount(cartProducts.length + 1)
   }, [cartProducts])
 
@@ -46,8 +53,19 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     closeProductDetail,
     currentProductDetail,
     cartProducts,
-    addProducts
-  }), [count, setCount, isProductDetailOpen, currentProductDetail, cartProducts, addProducts])
+    addProducts,
+    isCheckoutSideMenuOpen,
+    setIsCheckoutSideMenuOpen
+  }),
+  [
+    count,
+    setCount,
+    isProductDetailOpen,
+    currentProductDetail,
+    cartProducts,
+    addProducts,
+    isCheckoutSideMenuOpen
+  ])
 
   return (
     <ShoppingContext.Provider value={ contextValue }>

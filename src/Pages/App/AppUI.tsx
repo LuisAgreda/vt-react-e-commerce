@@ -7,6 +7,7 @@ import { MyOrder } from '../MyOrder'
 import { MyOrders } from '../MyOrders'
 import { NotFound } from '../NotFound'
 import { SignIn } from '../SignIn'
+import { CheckoutSideMenu } from '../../Components/CheckoutSideMenu'
 
 const AppRoutes = () => {
   const routes = useRoutes([
@@ -25,6 +26,7 @@ const AppUI = () => (
   <BrowserRouter>
     <Navbar />
     <AppRoutes />
+    <CheckoutSideMenu />
   </BrowserRouter>
 )
 

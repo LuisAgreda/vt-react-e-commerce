@@ -22,10 +22,12 @@ export interface ChildrenType {
 export interface CardContextType {
   count: number
   isProductDetailOpen: boolean
-  currentProductDetail: ProductsResponse | unknown
+  currentProductDetail: ProductsResponse | Record<string, string>
   cartProducts: ProductsResponse[]
+  isCheckoutSideMenuOpen: boolean
   setCount: (number: number) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
   closeProductDetail: () => void
   addProducts: (event: MouseEvent, product: ProductsResponse) => void
+  setIsCheckoutSideMenuOpen: (value: boolean) => void
 }
