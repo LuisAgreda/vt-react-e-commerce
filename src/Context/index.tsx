@@ -8,17 +8,19 @@ const defaulContext = {
   isCheckoutSideMenuOpen: false,
   cartProducts: [],
   currentProductId: null,
+  currentProductDetail: {},
   setCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
-  currentProductDetail: {},
   addProducts: () => {},
   setIsCheckoutSideMenuOpen: () => {},
+  deleteProduct: () => {}
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
 
 const ShoppingProvider = ({ children }: ChildrenType) => {
+  // States
   const [count, setCount] = useState(0)
 
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -29,6 +31,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
   const [currentProductId, setCurrentProductId] = useState<number | null>(null)
 
+  // Functions
   const openProductDetail = (currentProduct: ProductsResponse) => {
     setIsProductDetailOpen(true)
     setCurrentProductDetail(currentProduct)
@@ -49,10 +52,11 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
       newProducts.forEach(curProduct => {
         if (curProduct.id === product.id) {
           curProduct.amount = curProduct.amount! + 1
+          curProduct.totalPrice = curProduct.price * curProduct.amount
         }
       })
     } else {
-      newProducts.push({...product, amount: 1})
+      newProducts.push({...product, amount: 1, totalPrice: product.price })
       setCount(cartProducts.length + 1)
     }
 
@@ -67,28 +71,36 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     }, 500)
   }, [cartProducts, currentProductId])
 
+  const deleteProduct = useCallback((productId: number) => {
+    const newProducts = cartProducts.filter(product => product.id !== productId)
+    setCartProducts(newProducts)
+  }, [cartProducts])
+
+  // Context
   const contextValue = useMemo(() => ({
     count,
-    setCount,
     isProductDetailOpen,
-    openProductDetail,
-    closeProductDetail,
     currentProductDetail,
     cartProducts,
-    addProducts,
     isCheckoutSideMenuOpen,
+    currentProductId,
+    setCount,
+    openProductDetail,
+    closeProductDetail,
+    addProducts,
     setIsCheckoutSideMenuOpen,
-    currentProductId
+    deleteProduct
   }),
   [
     count,
-    setCount,
     isProductDetailOpen,
     currentProductDetail,
     cartProducts,
-    addProducts,
     isCheckoutSideMenuOpen,
-    currentProductId
+    currentProductId,
+    setCount,
+    addProducts,
+    deleteProduct
   ])
 
   return (
