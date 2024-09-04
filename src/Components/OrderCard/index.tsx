@@ -1,33 +1,37 @@
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 import { ProductType } from './types'
 
 const OrderCard = ({ product }: ProductType) => {
-  const { id, title, price } = product
+  const { id, title, price, amount } = product
 
   return (
-    <div className="flex justify-between items-start gap-3">
-      <div className="flex items-start gap-2">
-        <figure className="w-20 h-20 flex-shrink-0">
-          <img
-            className="w-full h-full rounded-lg object-cover"
-            src={ `https://picsum.photos/id/${id}/800` }
-            alt={ title } />
-        </figure>
+    <div className="pr-6 flex items-center gap-2 relative">
+      <button
+        className="p-1 rounded-full absolute top-0 right-0 hover:bg-red-200 duration-200"
+        type="button">
+        <TrashIcon className="w-5 h-5 text-black" />
+      </button>
 
+      <figure className="w-24 h-24 flex-shrink-0">
+        <img
+          className="w-full h-full rounded-lg object-cover"
+          src={ `https://picsum.photos/id/${id}/800` }
+          alt={ title } />
+      </figure>
+
+      <div className="h-full grid">
         <p className="text-sm">
           { title }
         </p>
-      </div>
 
-      <div className="flex items-center gap-2 whitespace-nowrap">
-        <p className="text-lg font-medium">
-          $ { price }
+        <p className="text-sm font-medium">
+          Cantidad: { amount }
         </p>
 
-        <button type="button">
-          <XMarkIcon className="w-6 h-6 text-black" />
-        </button>
+        <p className="text-lg font-medium self-end">
+          $ { price }
+        </p>
       </div>
     </div>
   )
