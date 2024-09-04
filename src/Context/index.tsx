@@ -7,6 +7,7 @@ const defaulContext = {
   isProductDetailOpen: false,
   isCheckoutSideMenuOpen: false,
   cartProducts: [],
+  currentProductId: null,
   setCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
@@ -26,6 +27,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 
+  const [currentProductId, setCurrentProductId] = useState<number | null>(null)
+
   const openProductDetail = (currentProduct: ProductsResponse) => {
     setIsProductDetailOpen(true)
     setCurrentProductDetail(currentProduct)
@@ -33,17 +36,36 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
   const closeProductDetail = () => setIsProductDetailOpen(false)
 
+  const isProductInCart = (cart: ProductsResponse[], product: ProductsResponse) => cart.some(current => current.id === product.id)
+
   const addProducts = useCallback((event: MouseEvent, product: ProductsResponse) => {
     event.stopPropagation()
 
+    if (currentProductId) return
+
     const newProducts = [...cartProducts]
-    newProducts.push(product)
+
+    if (isProductInCart(newProducts, product)) {
+      newProducts.forEach(curProduct => {
+        if (curProduct.id === product.id) {
+          curProduct.amount = curProduct.amount! + 1
+        }
+      })
+    } else {
+      newProducts.push({...product, amount: 1})
+      setCount(cartProducts.length + 1)
+    }
 
     setCartProducts(newProducts)
     setIsCheckoutSideMenuOpen(true)
     setIsProductDetailOpen(false)
-    setCount(cartProducts.length + 1)
-  }, [cartProducts])
+
+    setCurrentProductId(product.id)
+
+    setTimeout(() => {
+      setCurrentProductId(null)
+    }, 500)
+  }, [cartProducts, currentProductId])
 
   const contextValue = useMemo(() => ({
     count,
@@ -55,7 +77,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     cartProducts,
     addProducts,
     isCheckoutSideMenuOpen,
-    setIsCheckoutSideMenuOpen
+    setIsCheckoutSideMenuOpen,
+    currentProductId
   }),
   [
     count,
@@ -64,7 +87,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     currentProductDetail,
     cartProducts,
     addProducts,
-    isCheckoutSideMenuOpen
+    isCheckoutSideMenuOpen,
+    currentProductId
   ])
 
   return (
