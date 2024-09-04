@@ -7,7 +7,7 @@ const useFetchData = () => {
   const getProductsUrl = `${PRODUCTS_API}/products`
 
   const [items, setItems] = useState<ProductsResponse[] | null>(null)
-  const [error, setError] = useState<Error | null>(null)
+  const [errorFetch, setErrorFetch] = useState<Error | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,8 @@ const useFetchData = () => {
 
         setItems(data)
       } catch (error) {
-        setError(error as Error)
+        setErrorFetch(error as Error)
+        console.log(error)
       }
     }
 
@@ -29,7 +30,7 @@ const useFetchData = () => {
 
   return {
     items,
-    error
+    errorFetch
   }
 }
 
