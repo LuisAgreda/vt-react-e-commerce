@@ -96,6 +96,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
     setMyOrders(newTotalOrder)
     setCartProducts([])
+    setCount(0)
   }, [myOrders, cartProducts])
 
   // Context
