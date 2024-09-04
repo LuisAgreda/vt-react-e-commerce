@@ -1,6 +1,6 @@
 import { createContext, useState, useMemo, useCallback, type MouseEvent } from 'react'
 
-import type { ChildrenType, CardContextType, ProductsResponse } from '../types'
+import type { ChildrenType, CardContextType, ProductsResponse, OrderType } from '../types'
 
 const defaulContext = {
   count: 0,
@@ -9,12 +9,14 @@ const defaulContext = {
   cartProducts: [],
   currentProductId: null,
   currentProductDetail: {},
+  myOrders: [],
   setCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
   addProducts: () => {},
   setIsCheckoutSideMenuOpen: () => {},
-  deleteProduct: () => {}
+  deleteProduct: () => {},
+  handleCheckout: () => {}
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
@@ -24,8 +26,12 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const [count, setCount] = useState(0)
 
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
+
   const [currentProductDetail, setCurrentProductDetail] = useState({})
+
   const [cartProducts, setCartProducts] = useState<ProductsResponse[]>([])
+
+  const [myOrders, setMyOrders] = useState<OrderType[]>([])
 
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
 
@@ -76,6 +82,22 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     setCartProducts(newProducts)
   }, [cartProducts])
 
+  const handleCheckout = useCallback((totalPrice: number) => {
+    const newTotalOrder = [...myOrders]
+
+    const orderToAdd = {
+      totalPrice,
+      date: "my date",
+      products: cartProducts,
+      totalProducts: cartProducts.length
+    }
+
+    newTotalOrder.push(orderToAdd)
+
+    setMyOrders(newTotalOrder)
+    setCartProducts([])
+  }, [myOrders, cartProducts])
+
   // Context
   const contextValue = useMemo(() => ({
     count,
@@ -84,12 +106,14 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     cartProducts,
     isCheckoutSideMenuOpen,
     currentProductId,
+    myOrders,
     setCount,
     openProductDetail,
     closeProductDetail,
     addProducts,
     setIsCheckoutSideMenuOpen,
-    deleteProduct
+    deleteProduct,
+    handleCheckout
   }),
   [
     count,
@@ -98,9 +122,11 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     cartProducts,
     isCheckoutSideMenuOpen,
     currentProductId,
+    myOrders,
     setCount,
     addProducts,
-    deleteProduct
+    deleteProduct,
+    handleCheckout
   ])
 
   return (

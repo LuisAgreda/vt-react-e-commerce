@@ -17,6 +17,13 @@ export interface ProductsResponse {
   totalPrice?: number
 }
 
+export interface OrderType {
+  date: string,
+  totalPrice: number
+  products: ProductsResponse[],
+  totalProducts: number
+}
+
 export interface ChildrenType {
   children: ReactNode
 }
@@ -28,10 +35,12 @@ export interface CardContextType {
   cartProducts: ProductsResponse[]
   isCheckoutSideMenuOpen: boolean
   currentProductId: number | null
+  myOrders: OrderType[]
   setCount: (number: number) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
   closeProductDetail: () => void
   addProducts: (event: MouseEvent, product: ProductsResponse) => void
   setIsCheckoutSideMenuOpen: (value: boolean) => void
   deleteProduct: (productId: number) => void
+  handleCheckout: (totalPrice: number) => void
 }
