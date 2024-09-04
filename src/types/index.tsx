@@ -13,6 +13,7 @@ export interface ProductsResponse {
   description: string
   category: Category
   images: string[]
+  amount?: number
 }
 
 export interface ChildrenType {
@@ -25,6 +26,7 @@ export interface CardContextType {
   currentProductDetail: ProductsResponse | Record<string, string>
   cartProducts: ProductsResponse[]
   isCheckoutSideMenuOpen: boolean
+  currentProductId: number | null
   setCount: (number: number) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
   closeProductDetail: () => void
