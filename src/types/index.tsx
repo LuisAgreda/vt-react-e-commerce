@@ -14,6 +14,7 @@ export interface ProductsResponse {
   category: Category
   images: string[]
   amount?: number
+  totalPrice?: number
 }
 
 export interface ChildrenType {
@@ -32,4 +33,5 @@ export interface CardContextType {
   closeProductDetail: () => void
   addProducts: (event: MouseEvent, product: ProductsResponse) => void
   setIsCheckoutSideMenuOpen: (value: boolean) => void
+  deleteProduct: (productId: number) => void
 }
