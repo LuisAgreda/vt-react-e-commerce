@@ -9,7 +9,7 @@ import { ShoppingContext } from '../../Context'
 import { ProductsResponse } from '../../types'
 
 const CheckoutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen, cartProducts } = useContext(ShoppingContext)
+  const { isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen, cartProducts, handleCheckout } = useContext(ShoppingContext)
 
   const productPrices = cartProducts.map(product => product.totalPrice!)
 
@@ -28,7 +28,7 @@ const CheckoutSideMenu = () => {
           </button>
         </div>
 
-        <div className="px-6 grid gap-4">
+        <div className="px-6 flex flex-col flex-1 gap-4">
           {
             cartProducts.map((product: ProductsResponse) => (
               <OrderCard
@@ -38,7 +38,7 @@ const CheckoutSideMenu = () => {
           }
         </div>
 
-        <div className="p-6 bg-white sticky bottom-0">
+        <div className="px-6 py-4 bg-white border-t mt-6 sticky bottom-0">
           <p className="flex justify-between items-center">
             <span>
               Total:
@@ -48,6 +48,12 @@ const CheckoutSideMenu = () => {
               $ { totalPrice(productPrices) }
             </span>
           </p>
+
+          <button
+            className="w-full mt-2 py-3 text-white font-medium bg-black rounded-lg"
+            onClick={ () => handleCheckout(totalPrice(productPrices)) }>
+            Checkout
+          </button>
         </div>
       </aside>
     )
