@@ -1,0 +1,14 @@
+.addButton__check {
+  @apply w-6 h-6 p-1 box-content text-white bg-green-600 backdrop-blur rounded-full shadow-green-600;
+
+  animation: checkAnimation .7s;
+}
+
+@keyframes checkAnimation {
+  50% {
+    @apply scale-125 bg-green-600/50;
+  }
+  100% {
+    @apply bg-green-600/0;
+  }
+}
