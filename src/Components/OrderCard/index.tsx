@@ -1,15 +1,21 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
 
+import { ShoppingContext } from '../../Context'
+import { useContext } from 'react'
+
 import { ProductType } from './types'
 
 const OrderCard = ({ product }: ProductType) => {
-  const { id, title, price, amount } = product
+  const { deleteProduct } = useContext(ShoppingContext)
+
+  const { id, title, amount, totalPrice } = product
 
   return (
     <div className="pr-6 flex items-center gap-2 relative">
       <button
         className="p-1 rounded-full absolute top-0 right-0 hover:bg-red-200 duration-200"
-        type="button">
+        type="button"
+        onClick={ () => deleteProduct(product.id) } >
         <TrashIcon className="w-5 h-5 text-black" />
       </button>
 
@@ -30,7 +36,7 @@ const OrderCard = ({ product }: ProductType) => {
         </p>
 
         <p className="text-lg font-medium self-end">
-          $ { price }
+          $ { totalPrice }
         </p>
       </div>
     </div>
