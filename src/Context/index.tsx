@@ -1,5 +1,7 @@
 import { createContext, useState, useMemo, useCallback, type MouseEvent } from 'react'
 
+import { getDate } from '../utils'
+
 import type { ChildrenType, CardContextType, ProductsResponse, OrderType } from '../types'
 
 const defaulContext = {
@@ -87,7 +89,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
 
     const orderToAdd = {
       totalPrice,
-      date: "my date",
+      date: getDate(),
       products: cartProducts,
       totalProducts: cartProducts.length
     }
