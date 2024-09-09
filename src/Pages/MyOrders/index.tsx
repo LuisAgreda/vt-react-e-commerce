@@ -11,17 +11,22 @@ const MyOrders = () => {
 
   return (
     <Layout>
-      My Orders
+      <h1 className="font-medium text-lg mb-6">
+        My Orders
+      </h1>
 
-      {
-        myOrders.map((order, index) => (
-          <Link
-            key={ index }
-            to={`/my-orders/${index}`}>
-            <OrdersCard order={ order } />
-          </Link>
-        ))
-      }
+      <div className="w-full grid auto-cols-fr gap-2">
+        {
+          myOrders.map((order, index) => (
+            <Link
+              key={ index }
+              to={`/my-orders/${index}`}
+              className="w-full max-w-80 place-self-center">
+              <OrdersCard order={ order } />
+            </Link>
+          ))
+        }
+      </div>
     </Layout>
   )
 }

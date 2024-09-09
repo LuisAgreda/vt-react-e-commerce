@@ -10,7 +10,7 @@ export const getDate = () => {
   const hour = date.getHours()
   const minutes = date.getMinutes()
 
-  const fullDate = `${day}/${month}/${year} ${hour}:${minutes}`
+  const fullDate = `${day}/${month}/${year} - ${hour}:${minutes}`
 
   return fullDate
 }

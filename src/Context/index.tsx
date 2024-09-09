@@ -26,17 +26,11 @@ const ShoppingContext = createContext<CardContextType>(defaulContext)
 const ShoppingProvider = ({ children }: ChildrenType) => {
   // States
   const [count, setCount] = useState(0)
-
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
-
   const [currentProductDetail, setCurrentProductDetail] = useState({})
-
   const [cartProducts, setCartProducts] = useState<ProductsResponse[]>([])
-
   const [myOrders, setMyOrders] = useState<OrderType[]>([])
-
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
-
   const [currentProductId, setCurrentProductId] = useState<number | null>(null)
 
   // Functions
