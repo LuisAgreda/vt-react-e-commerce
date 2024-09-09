@@ -15,7 +15,7 @@ function Home() {
 
       <ProductDetail />
 
-      <div className='w-full px-4 gap-4 grid justify-items-center grid-cols-[repeat(auto-fit,_minmax(224px,_1fr))]'>
+      <div className='w-full gap-4 grid justify-items-center grid-cols-[repeat(auto-fit,_minmax(224px,_1fr))]'>
         {
           (items as ProductsResponse[])?.map(item => (
             <Card

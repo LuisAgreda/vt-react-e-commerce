@@ -5,19 +5,22 @@ import { useContext } from 'react'
 
 import { ProductType } from './types'
 
-const OrderCard = ({ product }: ProductType) => {
+const OrderCard = ({ product, noAllowDeleteProducts }: ProductType) => {
   const { deleteProduct } = useContext(ShoppingContext)
 
   const { id, title, amount, totalPrice } = product
 
   return (
     <div className="pr-6 flex items-center gap-2 relative">
-      <button
-        className="p-1 rounded-full absolute top-0 right-0 hover:bg-red-200 duration-200"
-        type="button"
-        onClick={ () => deleteProduct(product.id) } >
-        <TrashIcon className="w-5 h-5 text-black" />
-      </button>
+      {
+        !noAllowDeleteProducts &&
+        <button
+          className="p-1 rounded-full absolute top-0 right-0 hover:bg-red-200 duration-200"
+          type="button"
+          onClick={ () => deleteProduct(product.id) } >
+          <TrashIcon className="w-5 h-5 text-black" />
+        </button>
+      }
 
       <figure className="w-24 h-24 flex-shrink-0">
         <img

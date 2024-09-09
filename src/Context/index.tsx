@@ -95,6 +95,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     newTotalOrder.push(orderToAdd)
 
     setMyOrders(newTotalOrder)
+    setIsCheckoutSideMenuOpen(false)
     setCartProducts([])
     setCount(0)
   }, [myOrders, cartProducts])
