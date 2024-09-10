@@ -51,6 +51,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const openProductDetail = (currentProduct: ProductsResponse) => {
     setIsProductDetailOpen(true)
     setCurrentProductDetail(currentProduct)
+    setIsCheckoutSideMenuOpen(false)
   }
 
   const closeProductDetail = () => setIsProductDetailOpen(false)
@@ -109,6 +110,7 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     setIsCheckoutSideMenuOpen(false)
     setCartProducts([])
     setCount(0)
+    setSearchProductsByTitle(null)
   }, [myOrders, cartProducts])
 
   const filterItemsByTitle = useCallback((items: ProductsResponse[], searchProductsByTitle: string) => {
@@ -128,9 +130,11 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     } else if (searchProductsByTitle) {
       setFilteredItems(filterItemsByTitle(filteredItemsByCategory, searchProductsByTitle))
     }
+  }, [searchProductsByTitle, filteredItemsByCategory, items, filterItemsByTitle])
 
+  useEffect(() => {
     setFilteredItemsByCategory(filterItemsByCategory(searchProductsByCategory!))
-  }, [searchProductsByTitle, filteredItemsByCategory, items, filterItemsByTitle, filterItemsByCategory, searchProductsByCategory])
+  }, [filterItemsByCategory, searchProductsByCategory])
 
   // Context
   const contextValue = useMemo(() => ({

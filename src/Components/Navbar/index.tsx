@@ -29,7 +29,7 @@ const linkStyles = ({ isActive }: Record<string, boolean>) => {
 }
 
 const Navbar = () => {
-  const { count, setSearchProductsByCategory } = useContext(ShoppingContext)
+  const { count, setSearchProductsByCategory, setIsCheckoutSideMenuOpen } = useContext(ShoppingContext)
 
   return (
     <nav className="px-8 py-4 bg-white/85 backdrop-blur flex justify-between items-center sticky top-0 z-10">
@@ -37,7 +37,8 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/"
-            className="font-semibold text-lg">
+            className="font-semibold text-lg"
+            onClick={ () => setSearchProductsByCategory('') }>
             RK Shop
           </NavLink>
         </li>
@@ -73,10 +74,14 @@ const Navbar = () => {
           ))
         }
 
-        <li className="flex items-center gap-1">
-          <ShoppingBagIcon className="w-5 h-5 text-black" />
+        <li>
+          <button
+            className="flex items-center gap-1"
+            onClick={ () => setIsCheckoutSideMenuOpen(true) }>
+            <ShoppingBagIcon className="w-5 h-5 text-black" />
 
-          { count }
+            { count }
+          </button>
         </li>
       </ul>
     </nav>
