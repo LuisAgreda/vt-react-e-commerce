@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ShoppingContext } from '../Context'
 import type { ProductsResponse } from '../types'
 
 const PRODUCTS_API = import.meta.env.VITE_PRODUCTS_API
 
-const useFetchData = () => {
+const useGetProducts = () => {
+  const { setItems } = useContext(ShoppingContext)
   const getProductsUrl = `${PRODUCTS_API}/products`
 
-  const [items, setItems] = useState<ProductsResponse[] | null>(null)
   const [errorFetch, setErrorFetch] = useState<Error | null>(null)
 
   useEffect(() => {
@@ -26,12 +27,11 @@ const useFetchData = () => {
     }
 
     fetchData()
-  }, [getProductsUrl])
+  }, [getProductsUrl, setItems])
 
   return {
-    items,
     errorFetch
   }
 }
 
-export { useFetchData }
+export { useGetProducts }

@@ -1,10 +1,11 @@
-import { createContext, useState, useMemo, useCallback, type MouseEvent } from 'react'
+import { createContext, useState, useMemo, useCallback, useEffect, type MouseEvent } from 'react'
 
 import { getDate } from '../utils'
 
 import type { ChildrenType, CardContextType, ProductsResponse, OrderType } from '../types'
 
 const defaulContext = {
+  items: [],
   count: 0,
   isProductDetailOpen: false,
   isCheckoutSideMenuOpen: false,
@@ -12,19 +13,24 @@ const defaulContext = {
   currentProductId: null,
   currentProductDetail: {},
   myOrders: [],
+  searchProductsByTitle: null,
+  filteredItems: [],
+  setItems: () => {},
   setCount: () => {},
   openProductDetail: () => {},
   closeProductDetail: () => {},
   addProducts: () => {},
   setIsCheckoutSideMenuOpen: () => {},
   deleteProduct: () => {},
-  handleCheckout: () => {}
+  handleCheckout: () => {},
+  setSearchProductsByTitle: () => {}
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
 
 const ShoppingProvider = ({ children }: ChildrenType) => {
   // States
+  const [items, setItems] = useState<ProductsResponse[]>([])
   const [count, setCount] = useState(0)
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
   const [currentProductDetail, setCurrentProductDetail] = useState({})
@@ -32,6 +38,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const [myOrders, setMyOrders] = useState<OrderType[]>([])
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
   const [currentProductId, setCurrentProductId] = useState<number | null>(null)
+  const [searchProductsByTitle, setSearchProductsByTitle] = useState<string | null>(null)
+  const [filteredItems, setFilteredItems] = useState<ProductsResponse[]>([])
 
   // Functions
   const openProductDetail = (currentProduct: ProductsResponse) => {
@@ -96,8 +104,17 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     setCount(0)
   }, [myOrders, cartProducts])
 
+  const filterItemsByTitle = useCallback((items: ProductsResponse[], searchProductsByTitle: string) => {
+    return items.filter(item => item.title.toLocaleLowerCase().includes(searchProductsByTitle.toLocaleLowerCase()))
+  }, [])
+
+  useEffect(() => {
+    if (searchProductsByTitle) setFilteredItems(filterItemsByTitle(items, searchProductsByTitle))
+  }, [searchProductsByTitle, items, filterItemsByTitle])
+
   // Context
   const contextValue = useMemo(() => ({
+    items,
     count,
     isProductDetailOpen,
     currentProductDetail,
@@ -105,15 +122,20 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     isCheckoutSideMenuOpen,
     currentProductId,
     myOrders,
+    searchProductsByTitle,
+    filteredItems,
+    setItems,
     setCount,
     openProductDetail,
     closeProductDetail,
     addProducts,
     setIsCheckoutSideMenuOpen,
     deleteProduct,
-    handleCheckout
+    handleCheckout,
+    setSearchProductsByTitle
   }),
   [
+    items,
     count,
     isProductDetailOpen,
     currentProductDetail,
@@ -121,6 +143,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     isCheckoutSideMenuOpen,
     currentProductId,
     myOrders,
+    searchProductsByTitle,
+    filteredItems,
     setCount,
     addProducts,
     deleteProduct,
