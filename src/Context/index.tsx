@@ -14,7 +14,9 @@ const defaulContext = {
   currentProductDetail: {},
   myOrders: [],
   searchProductsByTitle: null,
+  searchProductsByCategory: null,
   filteredItems: [],
+  filteredItemsByCategory: [],
   setItems: () => {},
   setCount: () => {},
   openProductDetail: () => {},
@@ -23,7 +25,9 @@ const defaulContext = {
   setIsCheckoutSideMenuOpen: () => {},
   deleteProduct: () => {},
   handleCheckout: () => {},
-  setSearchProductsByTitle: () => {}
+  setSearchProductsByTitle: () => {},
+  setSearchProductsByCategory: () => {},
+  setFilteredItemsByCategory: () => {}
 }
 
 const ShoppingContext = createContext<CardContextType>(defaulContext)
@@ -39,7 +43,9 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
   const [currentProductId, setCurrentProductId] = useState<number | null>(null)
   const [searchProductsByTitle, setSearchProductsByTitle] = useState<string | null>(null)
+  const [searchProductsByCategory, setSearchProductsByCategory] = useState<string | null>(null)
   const [filteredItems, setFilteredItems] = useState<ProductsResponse[]>([])
+  const [filteredItemsByCategory, setFilteredItemsByCategory] = useState<ProductsResponse[]>([])
 
   // Functions
   const openProductDetail = (currentProduct: ProductsResponse) => {
@@ -108,9 +114,26 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     return items.filter(item => item.title.toLocaleLowerCase().includes(searchProductsByTitle.toLocaleLowerCase()))
   }, [])
 
+  const filterItemsByCategory = useCallback((searchProductsByCategory: string) => {
+    return searchProductsByCategory && searchProductsByCategory !== 'all'
+      ? items.filter(item => item.category.name.toLowerCase() === searchProductsByCategory)
+      : []
+  }, [items])
+
+
+  // Effects
   useEffect(() => {
-    if (searchProductsByTitle) setFilteredItems(filterItemsByTitle(items, searchProductsByTitle))
-  }, [searchProductsByTitle, items, filterItemsByTitle])
+    if (searchProductsByTitle && !filteredItemsByCategory.length) {
+      setFilteredItems(filterItemsByTitle(items, searchProductsByTitle))
+    } else if (searchProductsByTitle && filteredItemsByCategory.length) {
+      setFilteredItems(filterItemsByTitle(filteredItemsByCategory, searchProductsByTitle))
+    }
+  }, [searchProductsByTitle, filteredItemsByCategory, items, filterItemsByTitle])
+
+  useEffect(() => {
+    setFilteredItemsByCategory(filterItemsByCategory(searchProductsByCategory!))
+  }, [filterItemsByCategory, searchProductsByCategory])
+
 
   // Context
   const contextValue = useMemo(() => ({
@@ -124,6 +147,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     myOrders,
     searchProductsByTitle,
     filteredItems,
+    searchProductsByCategory,
+    filteredItemsByCategory,
     setItems,
     setCount,
     openProductDetail,
@@ -132,7 +157,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     setIsCheckoutSideMenuOpen,
     deleteProduct,
     handleCheckout,
-    setSearchProductsByTitle
+    setSearchProductsByTitle,
+    setSearchProductsByCategory
   }),
   [
     items,
@@ -145,6 +171,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
     myOrders,
     searchProductsByTitle,
     filteredItems,
+    searchProductsByCategory,
+    filteredItemsByCategory,
     setCount,
     addProducts,
     deleteProduct,

@@ -10,11 +10,19 @@ import { ProductDetail } from '../../Components/ProducDetail'
 function Home() {
   useGetProducts()
 
-  const { items, filteredItems, searchProductsByTitle, setSearchProductsByTitle } = useContext(ShoppingContext)
+  const { items, filteredItems, filteredItemsByCategory, searchProductsByTitle, searchProductsByCategory, setSearchProductsByTitle } = useContext(ShoppingContext)
 
-  const resolveItemsRender = searchProductsByTitle?.length
-    ? filteredItems
-    : items
+  const resolveItemsRender = () => {
+    if (!searchProductsByCategory || searchProductsByCategory === 'all') {
+      return searchProductsByTitle?.length
+        ? filteredItems
+        : items
+    } else {
+      return searchProductsByTitle?.length
+        ? filteredItems
+        : filteredItemsByCategory
+    }
+  }
 
   return (
     <Layout>
@@ -30,8 +38,8 @@ function Home() {
 
       <div className='w-full gap-4 grid justify-items-center grid-cols-[repeat(auto-fit,_minmax(224px,_1fr))]'>
         {
-          resolveItemsRender?.length
-          ? resolveItemsRender?.map(item => (
+          resolveItemsRender()?.length
+          ? resolveItemsRender()?.map(item => (
             <Card
             key={ item.id }
             data={ item } />

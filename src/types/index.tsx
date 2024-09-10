@@ -38,7 +38,9 @@ export interface CardContextType {
   currentProductId: number | null
   myOrders: OrderType[]
   searchProductsByTitle: string | null
+  searchProductsByCategory: string | null
   filteredItems: ProductsResponse[]
+  filteredItemsByCategory: ProductsResponse[]
   setItems: (data: ProductsResponse[]) => void
   setCount: (number: number) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
@@ -48,4 +50,5 @@ export interface CardContextType {
   deleteProduct: (productId: number) => void
   handleCheckout: (totalPrice: number) => void
   setSearchProductsByTitle: (value: string) => void
+  setSearchProductsByCategory: (categoty: string) => void
 }

@@ -7,7 +7,7 @@ import { ShoppingContext } from "../../Context"
 
 const navListLeft = [
   { to: '/', name: 'All' },
-  { to: '/clothes', name: 'Clothes' },
+  { to: '/clothes', name: 'Clothess' },
   { to: '/electronics', name: 'Electronics' },
   { to: '/fornitures', name: 'Fornitures' },
   { to: '/toys', name: 'Toys' },
@@ -29,7 +29,7 @@ const linkStyles = ({ isActive }: Record<string, boolean>) => {
 }
 
 const Navbar = () => {
-  const { count } = useContext(ShoppingContext)
+  const { count, setSearchProductsByCategory } = useContext(ShoppingContext)
 
   return (
     <nav className="px-8 py-4 bg-white/85 backdrop-blur flex justify-between items-center sticky top-0 z-10">
@@ -47,7 +47,8 @@ const Navbar = () => {
             <li key={ name }>
               <NavLink
                 to={to}
-                className={ linkStyles }>
+                className={ linkStyles }
+                onClick={ () => setSearchProductsByCategory(name.toLowerCase()) }>
                 { name }
               </NavLink>
             </li>
