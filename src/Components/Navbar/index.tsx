@@ -59,7 +59,7 @@ const Navbar = () => {
 
       <ul className="hidden lg:flex items-center gap-3">
         <li className="text-black/60">
-          agreda.feli@gmail.com
+          felipe.agreda@gmail.com
         </li>
 
         {
