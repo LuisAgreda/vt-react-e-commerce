@@ -90,7 +90,8 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   const deleteProduct = useCallback((productId: number) => {
     const newProducts = cartProducts.filter(product => product.id !== productId)
     setCartProducts(newProducts)
-  }, [cartProducts])
+    setCount(count - 1)
+  }, [cartProducts, count])
 
   const handleCheckout = useCallback((totalPrice: number) => {
     const newTotalOrder = [...myOrders]
@@ -120,7 +121,6 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
       : []
   }, [items])
 
-
   // Effects
   useEffect(() => {
     if (searchProductsByTitle && !filteredItemsByCategory.length) {
@@ -133,7 +133,6 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   useEffect(() => {
     setFilteredItemsByCategory(filterItemsByCategory(searchProductsByCategory!))
   }, [filterItemsByCategory, searchProductsByCategory])
-
 
   // Context
   const contextValue = useMemo(() => ({
