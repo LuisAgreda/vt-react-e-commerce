@@ -7,11 +7,11 @@ import { ShoppingContext } from "../../Context"
 
 const navListLeft = [
   { to: '/', name: 'All' },
-  { to: '/Clothes', name: 'Clothes' },
-  { to: '/Electronics', name: 'Electronics' },
-  { to: '/Fornitures', name: 'Fornitures' },
-  { to: '/Toys', name: 'Toys' },
-  { to: '/Others', name: 'Others' },
+  { to: '/clothes', name: 'Clothes' },
+  { to: '/electronics', name: 'Electronics' },
+  { to: '/fornitures', name: 'Fornitures' },
+  { to: '/toys', name: 'Toys' },
+  { to: '/others', name: 'Others' },
 ]
 
 const navListRight = [
