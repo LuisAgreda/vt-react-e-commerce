@@ -1,29 +1,47 @@
-import { useFetchData } from '../../Hooks/useFetchData'
+import { useContext } from 'react'
+import { ShoppingContext } from '../../Context'
+
+import { useGetProducts } from '../../Hooks/useFetchData'
 
 import { Layout } from '../../Components/Layout'
 import { Card } from '../../Components/Card'
 import { ProductDetail } from '../../Components/ProducDetail'
 
-import type { ProductsResponse } from '../../types'
-
 function Home() {
-  const { items } = useFetchData()
+  useGetProducts()
+
+  const { items, filteredItems, searchProductsByTitle, setSearchProductsByTitle } = useContext(ShoppingContext)
+
+  const resolveItemsRender = searchProductsByTitle?.length
+    ? filteredItems
+    : items
 
   return (
     <Layout>
-      Home
+      <h1 className="font-medium text-lg mb-6">
+        Exclusive Products
+      </h1>
 
-      <ProductDetail />
+      <input
+        type="text"
+        placeholder="Search a products"
+        className="w-80 mb-6 p-4 rounded-lg border border-black focus:outline-black"
+        onChange={(event) => setSearchProductsByTitle(event.target.value)} />
 
       <div className='w-full gap-4 grid justify-items-center grid-cols-[repeat(auto-fit,_minmax(224px,_1fr))]'>
         {
-          (items as ProductsResponse[])?.map(item => (
+          resolveItemsRender?.length
+          ? resolveItemsRender?.map(item => (
             <Card
-              key={ item.id }
-              data={ item } />
+            key={ item.id }
+            data={ item } />
           ))
+
+          : <p>Products not found</p>
         }
       </div>
+
+      <ProductDetail />
     </Layout>
   )
 }

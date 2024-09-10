@@ -29,6 +29,7 @@ export interface ChildrenType {
 }
 
 export interface CardContextType {
+  items: ProductsResponse[]
   count: number
   isProductDetailOpen: boolean
   currentProductDetail: ProductsResponse | Record<string, string>
@@ -36,6 +37,9 @@ export interface CardContextType {
   isCheckoutSideMenuOpen: boolean
   currentProductId: number | null
   myOrders: OrderType[]
+  searchProductsByTitle: string | null
+  filteredItems: ProductsResponse[]
+  setItems: (data: ProductsResponse[]) => void
   setCount: (number: number) => void
   openProductDetail: (currentProduct: ProductsResponse) => void
   closeProductDetail: () => void
@@ -43,4 +47,5 @@ export interface CardContextType {
   setIsCheckoutSideMenuOpen: (value: boolean) => void
   deleteProduct: (productId: number) => void
   handleCheckout: (totalPrice: number) => void
+  setSearchProductsByTitle: (value: string) => void
 }
