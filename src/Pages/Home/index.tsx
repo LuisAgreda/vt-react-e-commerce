@@ -32,11 +32,11 @@ function Home() {
 
       <input
         type="text"
-        placeholder="Search a products"
+        placeholder="Search products"
         className="w-80 mb-6 p-4 rounded-lg border border-black focus:outline-black"
         onChange={(event) => setSearchProductsByTitle(event.target.value)} />
 
-      <div className='w-full gap-4 grid justify-items-center grid-cols-[repeat(auto-fit,_minmax(224px,_1fr))]'>
+      <div className='w-[224px] sm:w-[464px] md:w-[704px] lg:w-[944px] flex flex-wrap gap-4'>
         {
           resolveItemsRender()?.length
           ? resolveItemsRender()?.map(item => (

@@ -7,7 +7,7 @@ import { ShoppingContext } from "../../Context"
 
 const navListLeft = [
   { to: '/', name: 'All' },
-  { to: '/clothes', name: 'Clothess' },
+  { to: '/clothes', name: 'Clothes' },
   { to: '/electronics', name: 'Electronics' },
   { to: '/fornitures', name: 'Fornitures' },
   { to: '/toys', name: 'Toys' },

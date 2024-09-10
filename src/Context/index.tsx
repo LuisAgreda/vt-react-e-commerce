@@ -125,14 +125,12 @@ const ShoppingProvider = ({ children }: ChildrenType) => {
   useEffect(() => {
     if (searchProductsByTitle && !filteredItemsByCategory.length) {
       setFilteredItems(filterItemsByTitle(items, searchProductsByTitle))
-    } else if (searchProductsByTitle && filteredItemsByCategory.length) {
+    } else if (searchProductsByTitle) {
       setFilteredItems(filterItemsByTitle(filteredItemsByCategory, searchProductsByTitle))
     }
-  }, [searchProductsByTitle, filteredItemsByCategory, items, filterItemsByTitle])
 
-  useEffect(() => {
     setFilteredItemsByCategory(filterItemsByCategory(searchProductsByCategory!))
-  }, [filterItemsByCategory, searchProductsByCategory])
+  }, [searchProductsByTitle, filteredItemsByCategory, items, filterItemsByTitle, filterItemsByCategory, searchProductsByCategory])
 
   // Context
   const contextValue = useMemo(() => ({
